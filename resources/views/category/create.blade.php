@@ -57,6 +57,6 @@
             } else {
                 console.log('No file selected');
             }
-        });
+        }); 
     </script>
 @endpush
