@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CartController;
 use App\Http\Controllers\api\CategoryController as ApiCategoryController;
 use App\Http\Controllers\api\ProductController as ApiProductController;
 use App\Http\Controllers\CategoryController;
@@ -29,4 +30,7 @@ Route::get('/categories', [ApiCategoryController::class, 'get_category']);
 Route::get('/categories/{slug}', [ApiCategoryController::class, 'show']);
 Route::get('/products', [ApiProductController::class, 'get_products']);
 Route::get('/products/{slug}', [ApiProductController::class, 'show']);
+Route::post('/cart/{id}', [CartController::class, 'addToProduct']);
+Route::delete('/cart/{id}', [CartController::class, 'delete']);
+Route::get('/cart', [CartController::class, 'show']);
 
