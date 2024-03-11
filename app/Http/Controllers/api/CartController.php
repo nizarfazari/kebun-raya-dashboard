@@ -17,23 +17,22 @@ class CartController extends Controller
 
         $cart = Cart::create([
             "user_id" => Auth::user()->id,
+            'product_id' => $id
         ]);
-        $cart->products()->sync($id);
 
         return new ResponseResource(true, "Successfully added product to cart", $cart);
     }
 
     public function show()
     {
-        $carts = Cart::with(['products'])->where('user_id', 1)->get();
+        $carts = Cart::with(['product'])->where('user_id', Auth::user()->id)->get();
         return new ResponseResource(true, "List Carts", $carts);
     }
 
     public function delete(Request $request, $id)
     {
         $cart = Cart::findOrFail($id);
-        dd($cart->products->where('id', $id));
-        // $cart->delete();
-        // return new ResponseResource(true, "Success to delete cart", $cart);
+        $cart->delete();
+        return new ResponseResource(true, "Success to delete cart", $cart);
     }
 }
