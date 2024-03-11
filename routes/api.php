@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\CategoryController as ApiCategoryController;
+use App\Http\Controllers\api\ProductController as ApiProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +19,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/posts', function(){
+    dd('test');
 });
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/categories', [ApiCategoryController::class, 'get_category']);
+Route::get('/categories/{slug}', [ApiCategoryController::class, 'show']);
+Route::get('/products', [ApiProductController::class, 'get_products']);
+Route::get('/products/{slug}', [ApiProductController::class, 'show']);
+

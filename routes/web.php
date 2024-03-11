@@ -1,7 +1,12 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\web\AuthController as WebAuthController;
+use App\Http\Controllers\web\CategoryController as WebCategoryController;
+use App\Http\Controllers\web\ProductController as WebProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,21 +28,28 @@ Route::get('/', function () {
 
 Route::middleware(['guest'])->group(function () {
     Route::prefix('auth')->group(function () {
-        Route::get('/login', [AuthController::class, 'index'])->name('login');
-        Route::post('/login-process', [AuthController::class, 'login_process'])->name('login-process');
-        Route::get('/register', [AuthController::class, 'register'])->name('register');
-        Route::post('/register_process', [AuthController::class, 'register_process'])->name('register_process');
+        Route::get('/login', [WebAuthController::class, 'index'])->name('login');
+        Route::post('/login-process', [WebAuthController::class, 'login_process'])->name('login-process');
+        Route::get('/register', [WebAuthController::class, 'register'])->name('register');
+        Route::post('/register_process', [WebAuthController::class, 'register_process'])->name('register_process');
     });
 });
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/logout', [WebAuthController::class, 'logout'])->name('logout');
     Route::prefix('category')->name('category.')->group(function () {
-        Route::get('/', [CategoryController::class, 'index'])->name('index');
-        Route::get('/create', [CategoryController::class, 'create'])->name('create');
-        Route::post('/store', [CategoryController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
+        Route::get('/', [WebCategoryController::class, 'index'])->name('index');
+        Route::get('/create', [WebCategoryController::class, 'create'])->name('create');
+        Route::post('/store', [WebCategoryController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [WebCategoryController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [WebCategoryController::class, 'update'])->name('update');
+    });
+    Route::prefix('product')->name('product.')->group(function () {
+        Route::get('/', [WebProductController::class, 'index'])->name('index');
+        Route::get('/create', [WebProductController::class, 'create'])->name('create');
+        Route::post('/store', [WebProductController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [WebProductController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [WebProductController::class, 'update'])->name('update');
     });
 });

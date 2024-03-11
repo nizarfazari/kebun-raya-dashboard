@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\web;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +15,6 @@ class CategoryController extends Controller
     {
 
         $data = new Category;
-
         $data = $data->get();
 
 
@@ -35,13 +34,13 @@ class CategoryController extends Controller
             'image' => 'required|mimes:png,jpg,jpeg|max:2048',
         ]);
 
-        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+        // if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
         $image = $request->file('image');
-        $filename = time() . '-' . $image->getClientOriginalName();
+        $filename = time() . '-' . $image->hashName();
         $path = 'category/' . $filename;
         Storage::disk('public')->put($path, file_get_contents($image));
-
+        // $image->storeAs('public/storage/category', $image->hashName());
         $data['name'] = $request->name;
         $data['image'] = $filename;
 
@@ -88,4 +87,6 @@ class CategoryController extends Controller
 
         return redirect()->route('category.index');
     }
+
+  
 }

@@ -13,14 +13,19 @@
                     <span>Users</span>
                 </a>
             </li>
-            <li class="">
-                <a class="nav-link" href=""><i class="fas fa-fire"></i>
+            <li class="{{ Route::is('product.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('product.index') }}"><i class="fas fa-fire"></i>
                     <span>Products</span>
                 </a>
             </li>
-            <li class="active">
+            <li class="{{ Route::is('category.index') ? 'active' : '' }}" >
                 <a class="nav-link" href="{{ route('category.index') }}"><i class="fas fa-fire"></i>
                     <span>Categories </span>
+                </a>
+            </li>
+            <li class=>
+                <a class="nav-link" href="blank.html"><i class="fas fa-fire"></i>
+                    <span>Pesanan</span>
                 </a>
             </li>
         </ul>

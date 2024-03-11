@@ -3,7 +3,7 @@
 
 @section('header')
     <div class="section-header">
-        <h1>Categories</h1>
+        <h1>Products</h1>
     </div>
 @endsection
 @section('content')
@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h4>Simple Table</h4>
-                <a class="btn btn-primary" href="{{ route('category.create') }}">Tambah data</a>
+                <a class="btn btn-primary" href="{{ route('product.create') }}">Tambah data</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -20,7 +20,11 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
+                                <th>Description</th>
+                                <th>Stock</th>
+                                <th>Harga</th>
                                 <th>Image</th>
+                                <th>Kategori</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -29,9 +33,17 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $d->name }} </td>
+                                    <td>{!! $d->description !!}</td>
+                                    <td>{{ $d->stock }} </td>
+                                    <td>{{ $d->harga }} </td>
                                     <td>
-                                        <img src="{{ $d->image }}" alt=""
+                                        <img src="{{ asset('storage/product/' . $d->image) }}" alt=""
                                             width="50">
+                                    </td>
+                                    <td>
+                                        @foreach ($d->categories as $category)
+                                            <div class="badge badge-success">{{ $category->name }}</div>
+                                        @endforeach
                                     </td>
                                     <td>
                                         <a href="{{ route('category.edit', ['id' => $d->id]) }}"
