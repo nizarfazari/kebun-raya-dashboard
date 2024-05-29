@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            // $table->enum('status', ['UNPAID', 'PAID', 'EXPIRED'])->default('UNPAID');
+            $table->string('status')->default('PENDING');
+            $table->string('total_biaya_product');
+            $table->string('biaya_pengiriman');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
-            $table->string("qty");
+
             $table->timestamps();
-
-
-            // Menambahkan kunci asing ke tabel users
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('transactions');
     }
 };

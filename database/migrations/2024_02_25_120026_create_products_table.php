@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('berat');
             $table->text('description');
             $table->string('stock');
             $table->string('harga');

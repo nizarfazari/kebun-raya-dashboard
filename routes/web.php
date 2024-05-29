@@ -1,9 +1,6 @@
 <?php
 
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\web\AuthController as WebAuthController;
 use App\Http\Controllers\web\CategoryController as WebCategoryController;
 use App\Http\Controllers\web\ProductController as WebProductController;
@@ -22,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/auth/login');
 });
 
 

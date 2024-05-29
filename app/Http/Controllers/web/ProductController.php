@@ -37,7 +37,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-   
+
+       
         // $validator = $request->validate([
         //     'name' => 'required',
         //     'description' => 'required',
@@ -59,14 +60,12 @@ class ProductController extends Controller
         $data['description'] = $request->description;
         $data['stock'] = $request->stock;
         $data['harga'] = $request->harga;
-        $data['image'] = $filename ;
+        $data['berat'] = $request->berat;
+        $data['image'] = $filename;
 
         $product = Product::create($data);
         $product->categories()->sync($request->input('cateogries'));
         return redirect()->route('product.index');
-
-
-
     }
 
     /**
@@ -101,7 +100,8 @@ class ProductController extends Controller
         //
     }
 
-    public function get_products() {
+    public function get_products()
+    {
         $data = Product::with('categories')->get();
         return response()->json($data);
     }

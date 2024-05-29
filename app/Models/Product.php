@@ -16,7 +16,8 @@ class Product extends Model
         'description',
         'stock',
         'harga',
-        'image'
+        'image',
+        'berat'
     ];
 
     public function sluggable(): array
@@ -37,4 +38,7 @@ class Product extends Model
     {
         return $this->belongsToMany(Cart::class, 'carts_products');
     }
+
+
+    
 }

@@ -21,7 +21,7 @@
                         <small>{{ $message }}</small>
                     @enderror
                 </div>
-                
+
                 <div class="form-group">
                     <label>Description</label>
                     <textarea class="summernote form-control" placeholder="Type a reply ..." name="description"></textarea>
@@ -37,15 +37,22 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label>Berat</label>
+                    <input type="number" name="berat" class="form-control ">
+                    @error('berat')
+                        <small>{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label>Category</label>
                     <select class="form-control select2" multiple name="cateogries[]">
                         @foreach ($category as $item)
-                            
-                        <option value="{{  $item->id }}">{{  $item->name }}</option>
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
-                      
+
                     </select>
-                  </div>
+                </div>
                 <div class="form-group">
                     <label>Harga</label>
                     <input type="number" name="harga" class="form-control ">
@@ -73,7 +80,7 @@
 
 
 @push('before-script')
-<script src="{{ asset('/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
     <script lang="js">
         const form = document.querySelector('form');
         const fileInput = document.getElementById('customFile');
@@ -90,6 +97,6 @@
             } else {
                 console.log('No file selected');
             }
-        }); 
+        });
     </script>
 @endpush
