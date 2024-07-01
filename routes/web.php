@@ -4,6 +4,8 @@
 use App\Http\Controllers\web\AuthController as WebAuthController;
 use App\Http\Controllers\web\CategoryController as WebCategoryController;
 use App\Http\Controllers\web\ProductController as WebProductController;
+use App\Http\Controllers\web\OrderController as WebOrderController;
+use App\Http\Controllers\web\DashboardController as WebDashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/auth/login');
 });
+
 
 
 Route::middleware(['guest'])->group(function () {
@@ -42,6 +45,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit/{id}', [WebCategoryController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [WebCategoryController::class, 'update'])->name('update');
     });
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/', [WebDashboardController::class, 'index'])->name('index');
+    });
+    Route::prefix('order')->name('order.')->group(function () {
+        Route::get('/', [WebOrderController::class, 'index'])->name('index');
+        Route::get('/detail', [WebOrderController::class, 'detail_order'])->name('detail');
+        Route::post('/upload_receipt', [WebOrderController::class, 'upload_receipt'])->name('upload_receipt');
+    });
+
     Route::prefix('product')->name('product.')->group(function () {
         Route::get('/', [WebProductController::class, 'index'])->name('index');
         Route::get('/create', [WebProductController::class, 'create'])->name('create');

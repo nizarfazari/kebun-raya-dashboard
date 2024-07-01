@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('status')->default('PENDING');
             $table->string('total_biaya_product');
             $table->string('biaya_pengiriman');
+            $table->string('order_id_midtrans')->nullable();
             $table->unsignedBigInteger('user_id');
 
             $table->timestamps();

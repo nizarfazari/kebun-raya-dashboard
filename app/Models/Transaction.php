@@ -17,6 +17,7 @@ class Transaction extends Model
         'status',
         'total_biaya_product',
         'biaya_pengiriman',
+        'order_id_midtrans'
     ];
 
 
@@ -29,11 +30,17 @@ class Transaction extends Model
 
     public function detail()
     {
-        return $this->hasMany(TransactionDetail::class);
+        return $this->hasMany(TransactionProduct::class);
     }
 
     public function transaction_buyer()
     {
         return $this->hasOne(TransactionBuyer::class);
+    }
+
+      
+    public function receipt()
+    {
+        return $this->hasOne(Receipt::class);
     }
 }

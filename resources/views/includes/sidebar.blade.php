@@ -1,16 +1,16 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">Stisla</a>
+            <a href="index.html">Kebun Raya</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="index.html">St</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class=>
-                <a class="nav-link" href="blank.html"><i class="fas fa-fire"></i>
-                    <span>Users</span>
+            <li class="{{ Route::is('dashboard.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('dashboard.index') }}"><i class="fas fa-fire"></i>
+                    <span>Dashboard</span>
                 </a>
             </li>
             <li class="{{ Route::is('product.index') ? 'active' : '' }}">
@@ -23,8 +23,8 @@
                     <span>Categories </span>
                 </a>
             </li>
-            <li class=>
-                <a class="nav-link" href="blank.html"><i class="fas fa-fire"></i>
+            <li class="{{ Route::is('order.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('order.index') }}"><i class="fas fa-fire"></i>
                     <span>Pesanan</span>
                 </a>
             </li>

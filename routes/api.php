@@ -27,6 +27,9 @@ Route::get('/check_ongkir', function () {
     dd('test');
 });
 
+Route::post('/transaction/confirm', [TransactionController::class, 'confirmation_status']);
+Route::post('/transaction/accepted', [TransactionController::class, 'accepted_status']);
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/categories', [ApiCategoryController::class, 'get_category']);
@@ -38,6 +41,7 @@ Route::get('/city/{provinceId}', [RajaOngkirController::class, 'get_city']);
 Route::post('/check_ongkir', [RajaOngkirController::class, 'check_ongkir']);
 Route::post('/midtrans', [TransactionController::class, 'payment']);
 Route::post('/midtrans-callback', [TransactionController::class, 'callback']);
+Route::post('/midtrans-success', [TransactionController::class, 'callbackSuccess']);
 
 
 Route::group(["middleware" => ["auth:api"]], function () {

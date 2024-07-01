@@ -6,15 +6,27 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>@yield('title') {{ config('app.name') }}</title>
 
-    <!-- General CSS Files -->
-    <link rel="stylesheet" href="{{ secure_asset('/assets/modules/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('/assets/modules/fontawesome/css/all.min.css') }}">
+    @if (env('APP_ENV') === 'development')
+        <!-- General CSS Files -->
+        <link rel="stylesheet" href="{{ asset('/assets/modules/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('/assets/modules/fontawesome/css/all.min.css') }}">
 
-    <!-- CSS Libraries -->
+        <!-- CSS Libraries -->
 
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ secure_asset('/assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('/assets/css/components.css') }}">
+        <!-- Template CSS -->
+        <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/assets/css/components.css') }}">
+    @else
+        <!-- General CSS Files -->
+        <link rel="stylesheet" href="{{ secure_asset('/assets/modules/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('/assets/modules/fontawesome/css/all.min.css') }}">
+
+        <!-- CSS Libraries -->
+
+        <!-- Template CSS -->
+        <link rel="stylesheet" href="{{ secure_asset('/assets/css/style.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('/assets/css/components.css') }}">
+    @endif
 
     @stack('page-styles')
     <!-- Start GA -->
@@ -37,22 +49,43 @@
         @yield('content')
     </div>
     @stack('before-script')
-    <!-- General JS Scripts -->
-    <script src="{{ secure_asset('/assets/modules/jquery.min.js') }}"></script>
-    <script src="{{ secure_asset('/assets/modules/popper.js') }}"></script>
-    <script src="{{ secure_asset('/assets/modules/tooltip.js') }}"></script>
-    <script src="{{ secure_asset('/assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ secure_asset('/assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
-    <script src="{{ secure_asset('/assets/modules/moment.min.js') }}"></script>
-    <script src="{{ secure_asset('/assets/js/stisla.js') }}"></script>
+    @if (env('APP_ENV') === 'development')
+        <!-- General JS Scripts -->
+        <script src="{{ asset('/assets/modules/jquery.min.js') }}"></script>
+        <script src="{{ asset('/assets/modules/popper.js') }}"></script>
+        <script src="{{ asset('/assets/modules/tooltip.js') }}"></script>
+        <script src="{{ asset('/assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('/assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
+        <script src="{{ asset('/assets/modules/moment.min.js') }}"></script>
+        <script src="{{ asset('/assets/js/stisla.js') }}"></script>
 
-    <!-- JS Libraies -->
+        <!-- JS Libraries -->
 
-    <!-- Page Specific JS File -->
+        <!-- Page Specific JS File -->
 
-    <!-- Template JS File -->
-    <script src="{{ secure_asset('/assets/js/scripts.js') }}"></script>
-    <script src="{{ secure_asset('/assets/js/custom.js') }}"></script>
+        <!-- Template JS File -->
+        <script src="{{ asset('/assets/js/scripts.js') }}"></script>
+        <script src="{{ asset('/assets/js/custom.js') }}"></script>
+    @else
+        <!-- General JS Scripts -->
+        <script src="{{ secure_asset('/assets/modules/jquery.min.js') }}"></script>
+        <script src="{{ secure_asset('/assets/modules/popper.js') }}"></script>
+        <script src="{{ secure_asset('/assets/modules/tooltip.js') }}"></script>
+        <script src="{{ secure_asset('/assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ secure_asset('/assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
+        <script src="{{ secure_asset('/assets/modules/moment.min.js') }}"></script>
+        <script src="{{ secure_asset('/assets/js/stisla.js') }}"></script>
+
+        <!-- JS Libraries -->
+
+        <!-- Page Specific JS File -->
+
+        <!-- Template JS File -->
+        <script src="{{ secure_asset('/assets/js/scripts.js') }}"></script>
+        <script src="{{ secure_asset('/assets/js/custom.js') }}"></script>
+    @endif
+
+    <!-- CDN JS Script -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
