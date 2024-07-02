@@ -5,7 +5,6 @@
     <div class="section-header">
         <h1>Daftar Pesanan</h1>
     </div>
-    {{ $datas }}
     <div class="card">
         <div class="card-header">
             <h4>Pesanan </h4>

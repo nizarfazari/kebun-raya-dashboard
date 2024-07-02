@@ -18,7 +18,7 @@ class TransactionController extends Controller
     {
 
         $transaction = Transaction::with(['detail', 'detail.product', "transaction_buyer"])->where("id", $request->id)->first();
-
+        
 
         \Midtrans\Config::$serverKey = config('midtrans.server_key');
         \Midtrans\Config::$isProduction = false;

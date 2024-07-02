@@ -79,7 +79,7 @@
                         <h4>Penjualan Hari ini</h4>
                     </div>
                     <div class="card-body">
-                        10
+                        {{ $totalCostForCurrentMonth }}
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                         <h4>Total Penjualan </h4>
                     </div>
                     <div class="card-body">
-                        10
+                        {{ $totalProfit }}
                     </div>
                 </div>
             </div>
@@ -104,75 +104,58 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>Ringkasan Penjualan</h4>
-            <div class="card-header-action">
-                <a href="#" class="btn btn-danger">View More <i class="fas fa-chevron-right"></i></a>
-            </div>
+            <h4>Transaksi Terbaru</h4>
+        
         </div>
         <div class="card-body p-0">
             <div class="table-responsive table-invoice">
                 <table class="table table-striped">
-                    <tr>
-                        <th>No</th>
-                        <th>Produk</th>
-                        <th>Jumlah Produk terjual</th>
-                        <th>Stock</th>
-                    </tr>
-                    <tr>
-                        <td><a href="#">INV-87239</a></td>
-                        <td class="font-weight-600">Kusnadi</td>
-                        <td>
-                            <div class="badge badge-warning">Unpaid</div>
-                        </td>
-                        <td>July 19, 2018</td>
-                        <td>
-                            <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">INV-48574</a></td>
-                        <td class="font-weight-600">Hasan Basri</td>
-                        <td>
-                            <div class="badge badge-success">Paid</div>
-                        </td>
-                        <td>July 21, 2018</td>
-                        <td>
-                            <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">INV-76824</a></td>
-                        <td class="font-weight-600">Muhamad Nuruzzaki</td>
-                        <td>
-                            <div class="badge badge-warning">Unpaid</div>
-                        </td>
-                        <td>July 22, 2018</td>
-                        <td>
-                            <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">INV-84990</a></td>
-                        <td class="font-weight-600">Agung Ardiansyah</td>
-                        <td>
-                            <div class="badge badge-warning">Unpaid</div>
-                        </td>
-                        <td>July 22, 2018</td>
-                        <td>
-                            <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">INV-87320</a></td>
-                        <td class="font-weight-600">Ardian Rahardiansyah</td>
-                        <td>
-                            <div class="badge badge-success">Paid</div>
-                        </td>
-                        <td>July 28, 2018</td>
-                        <td>
-                            <a href="#" class="btn btn-primary">Detail</a>
-                        </td>
-                    </tr>
+                    <thead>
+
+                        <tr>
+                            <th>Invoice ID</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th>Total Harga</th>
+                            <th>Due Date</th>
+                            <th>No Resi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($transaction as $d)
+                            <tr>
+                                <td>
+                                    <div>{{ $d->order_id_midtrans }}</div>
+                                </td>
+                                <td class="font-weight-600">{{ $d->transaction_buyer->first_name }}
+                                    {{ $d->transaction_buyer->last_name }}</td>
+                                <td>
+                                    @if ($d->status == 'PENDING')
+                                        <div class="badge badge-primary">PENDING</div>
+                                    @elseif($d->status == 'SUDAH-DIBAYAR')
+                                        <div class="badge badge-info">SUDAH DIBAYAR</div>
+                                    @elseif($d->status == 'DIKIRIM')
+                                        <div class="badge badge-warning">MENUNGGU DITERIMA</div>
+                                    @elseif($d->status == 'DITERIMA')
+                                        <div class="badge badge-success">DITERIMA</div>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div>{{ $d->total_biaya_product + $d->biaya_pengiriman }}</div>
+                                </td>
+                                <td>{{ $d->created_at }}</td>
+                                <td>
+                                    @if ($d->receipt)
+                                        <p class="mb-0">{{ $d->receipt->no_receipt }}</p>
+                                    @else
+                                        <p>No Resi Belum Di inputkan</p>
+                                    @endif
+
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
