@@ -61,7 +61,7 @@
                         <h4>Product</h4>
                     </div>
                     <div class="card-body">
-                        47
+                        {{ $products }}
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                         <h4>Penjualan Hari ini</h4>
                     </div>
                     <div class="card-body">
-                        {{ $totalCostForCurrentMonth }}
+                        {{ $totalCostForCurrentMonth ?? 0 }}
                     </div>
                 </div>
             </div>
@@ -97,15 +97,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 ">
+            <div class="card">
 
+                {!! $chart->container()  !!}
+            </div>
         </div>
     </div>
 
     <div class="card">
         <div class="card-header">
             <h4>Transaksi Terbaru</h4>
-        
+
         </div>
         <div class="card-body p-0">
             <div class="table-responsive table-invoice">
@@ -161,3 +164,9 @@
         </div>
     </div>
 @endsection
+
+
+@push('page-script')
+    <script src="{{ $chart->cdn() }}"></script>
+    {{ $chart->script() }}
+@endpush

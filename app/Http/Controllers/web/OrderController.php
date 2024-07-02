@@ -17,9 +17,13 @@ class OrderController extends Controller
     {
 
 
-        $datas = Transaction::select(DB::raw('YEAR(created_at) year, MONTH(created_at) month, COUNT(*) as total_transactions'))
+        $datas = Transaction::select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(*) as total_transactions')
+        )
             ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
-            ->get();
+            ->orderBy(DB::raw('MONTH(created_at)'), 'asc')->get();
 
 
         return view('order.index', compact('datas'));
@@ -27,12 +31,12 @@ class OrderController extends Controller
 
     public function detail_order(Request $request)
     {
-        // $month = $request->input('month');
-        // $year = $request->input('year');
+        $month = $request->query('month');
+        $year = $request->query('year');
 
         $data = Transaction::with(['detail', 'transaction_buyer', 'receipt'])
-            ->whereYear('created_at', 2024)
-            ->whereMonth('created_at', 6)
+            ->whereYear('created_at', $year)
+            ->whereMonth('created_at', $month)
             ->get();
 
         return view('order.detail', compact('data'));
@@ -119,5 +123,9 @@ class OrderController extends Controller
         ]);
 
         return redirect()->route('order.index');
+    }
+
+    public function export_pdf()  {
+        
     }
 }

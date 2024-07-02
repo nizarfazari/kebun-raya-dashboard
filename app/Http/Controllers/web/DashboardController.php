@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\web;
 
+use App\Charts\MonthlyTransactionChart;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
@@ -10,17 +11,18 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(MonthlyTransactionChart $chart)
     {
+
         $categories = Category::count();
         $products = Product::count();
         $transaction = Transaction::orderBy('created_at', 'desc')->get();
-        $totalCostForCurrentMonth = $this->sumTotalCostForCurrentMonth($transaction);
-        $totalProfit = $this->sumTotalProfit($transaction);
-
+        $totalCostForCurrentMonth = Transaction::whereYear('created_at', date('Y'))->where('status', 'DITERIMA')->whereMonth('created_at', date('m')) ->selectRaw('SUM(total_biaya_product + biaya_pengiriman) as total_biaya')->value('total_biaya');
+        $totalProfit = Transaction::whereYear('created_at', date('Y'))->where('status', 'DITERIMA')->selectRaw('SUM(total_biaya_product + biaya_pengiriman) as total_biaya')->value('total_biaya');
+        $chart =  $chart->build();
 
         
-        return view('dashboard.index', compact('categories', 'products', 'transaction', 'totalCostForCurrentMonth', 'totalProfit'));
+        return view('dashboard.index', compact('categories', 'products', 'transaction', 'totalCostForCurrentMonth', 'totalProfit', 'chart'));
     }
 
     private function sumTotalCostForCurrentMonth($data)

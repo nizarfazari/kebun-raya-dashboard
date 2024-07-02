@@ -21,4 +21,8 @@ class TransactionProduct extends Model
     {
         return $this->hasOne(Product::class, 'id', 'product_id');
     }
+
+    public function transaction(){
+        return $this->belongsTo(Transaction::class, 'transaction_id');
+    }
 }

@@ -30,7 +30,7 @@ class Transaction extends Model
 
     public function detail()
     {
-        return $this->hasMany(TransactionProduct::class);
+        return $this->hasMany(TransactionProduct::class, 'transaction_id');
     }
 
     public function transaction_buyer()

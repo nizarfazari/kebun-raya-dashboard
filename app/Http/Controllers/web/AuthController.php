@@ -29,7 +29,15 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($data)) {
-            return redirect()->route('dashboard.index');
+            $user =  Auth::user();
+            
+            if ($user->role == 'admin') {
+                return redirect()->route('dashboard.index');
+            } else {
+            
+                Auth::logout();
+                return redirect()->route('login')->with('failed', 'Anda Bukan Admin');
+            }
         } else {
             return redirect()->route('login')->with('failed', 'Email atau Password Salah');
         }
@@ -55,14 +63,15 @@ class AuthController extends Controller
             'password_confirmation' => 'required',
         ]);
 
-        
+
         $data = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'admin'
         ];
-        
-        
+
+
         User::create($data);
 
         $login = [
