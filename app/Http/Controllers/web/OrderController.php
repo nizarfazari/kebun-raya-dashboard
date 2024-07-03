@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -125,7 +126,18 @@ class OrderController extends Controller
         return redirect()->route('order.index');
     }
 
-    public function export_pdf()  {
-        
+    public function export_pdf(Request $request)  {
+        $month = $request->query('month');
+        $year = $request->query('year');
+
+        $data = Transaction::with(['detail', 'detail.product'])
+        ->whereYear('created_at', $year)
+        ->whereMonth('created_at', $month)
+        ->get();
+
+
+
+        $pdf = Pdf::loadView('pdf.barang-keluar', compact('data'));
+        return $pdf->stream('invoice.pdf');
     }
 }

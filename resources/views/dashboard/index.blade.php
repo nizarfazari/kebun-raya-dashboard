@@ -79,7 +79,7 @@
                         <h4>Penjualan Hari ini</h4>
                     </div>
                     <div class="card-body">
-                        {{ $totalCostForCurrentMonth ?? 0 }}
+                        {{ number_format($totalCostForCurrentMonth ?? 0, 2, ',', '.') }}
                     </div>
                 </div>
             </div>
@@ -92,7 +92,8 @@
                         <h4>Total Penjualan </h4>
                     </div>
                     <div class="card-body">
-                        {{ $totalProfit }}
+                        {{ number_format($totalProfit ?? 0, 2, ',', '.') }}
+                        
                     </div>
                 </div>
             </div>

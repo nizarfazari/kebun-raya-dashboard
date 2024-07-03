@@ -30,11 +30,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($data)) {
             $user =  Auth::user();
-            
+
             if ($user->role == 'admin') {
                 return redirect()->route('dashboard.index');
             } else {
-            
+
                 Auth::logout();
                 return redirect()->route('login')->with('failed', 'Anda Bukan Admin');
             }

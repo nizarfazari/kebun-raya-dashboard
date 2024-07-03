@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [WebOrderController::class, 'index'])->name('index');
         Route::get('/detail', [WebOrderController::class, 'detail_order'])->name('detail');
         Route::post('/upload_receipt', [WebOrderController::class, 'upload_receipt'])->name('upload_receipt');
-        Route::get('/barang-keluar', [WebOrderController::class, 'upload_receipt'])->name('barang-keluar');
+        Route::get('/barang-keluar', [WebOrderController::class, 'export_pdf'])->name('barang-keluar');
     });
 
     Route::prefix('product')->name('product.')->group(function () {

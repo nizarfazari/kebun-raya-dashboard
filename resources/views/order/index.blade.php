@@ -37,7 +37,7 @@
                                 <td>
                                     <a href="{{ route('order.detail', ['month' => $data->month, 'year' => $data->year]) }}"
                                         class="btn btn-primary">Detail</a>
-                                    <a href="{{ route('order.barang-keluar') }}" class="btn btn-danger">Cetak Barang
+                                    <a href="{{ route('order.barang-keluar', ['month' => $data->month, 'year' => $data->year]) }}" class="btn btn-danger">Cetak Barang
                                         Keluar</a>
                                 </td>
                             </tr>

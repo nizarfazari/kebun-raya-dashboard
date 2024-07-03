@@ -10,13 +10,19 @@ use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isEmpty;
+
 class CartController extends Controller
 {
     public function addToProduct(Request $request, $id)
     {
-        $duplicate = Cart::where("product_id", $request->product_id)->first();
+        $duplicate = Cart::where("product_id", $id)
+        ->where("user_id", Auth::user()->id)
+        ->first();
+
+        
         if ($duplicate) {
-            return new ResponseResource(301, "Product has been added in cart", $duplicate);
+            return new ResponseResource(301, "Product has already been added to the cart", $duplicate);
         }
 
         $cart = Cart::create([

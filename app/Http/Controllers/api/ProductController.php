@@ -23,4 +23,13 @@ class ProductController extends Controller
         $product = Product::with('categories')->where('slug', $slug)->first();
         return new ResponseResource(true, 'Detail Data Product!', $product);
     }
+
+
+    public function find(Request $request)
+    {
+        $products = Product::with('categories')->where('name', 'like', '%' . $request->name . '%')
+            ->get();
+        dd($products);
+        return new ResponseResource(true, 'Data Product!', $products);
+    }
 }
