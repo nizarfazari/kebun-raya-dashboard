@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            // $table->enum('status', ['UNPAID', 'PAID', 'EXPIRED'])->default('UNPAID');
+            $table->string('no_transaction');
             $table->string('status')->default('PENDING');
             $table->string('total_biaya_product');
-            $table->string('biaya_pengiriman');
+            $table->string('image')->nullable();
+            $table->string('no_receipt')->nullable();
             $table->string('order_id_midtrans')->nullable();
             $table->unsignedBigInteger('user_id');
 

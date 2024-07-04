@@ -35,6 +35,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/categories', [ApiCategoryController::class, 'get_category']);
 Route::get('/categories/{slug}', [ApiCategoryController::class, 'show']);
 Route::get('/products', [ApiProductController::class, 'get_products']);
+Route::post('/find/products', [ApiProductController::class, 'find']);
 Route::get('/products/{slug}', [ApiProductController::class, 'show']);
 Route::get('/provinces', [RajaOngkirController::class, 'get_provinces']);
 Route::get('/city/{provinceId}', [RajaOngkirController::class, 'get_city']);

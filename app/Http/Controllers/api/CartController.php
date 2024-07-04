@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\isEmpty;
@@ -53,14 +54,12 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
 
-
-        // dd($request->total_biaya_product);
         $carts = Cart::with(['product'])->where('user_id', Auth::user()->id)->get();
         $transactions = Transaction::create([
             'user_id' => Auth::user()->id,
             'status' => 'PENDING',
             "total_biaya_product" => $request->total_biaya_product,
-            "biaya_pengiriman" => $request->biaya_pengiriman
+            "no_transaction" => "NO-TRS-".Str::random(10)
         ]);
 
         $transactions->transaction_buyer()->create($request->data_buyer);

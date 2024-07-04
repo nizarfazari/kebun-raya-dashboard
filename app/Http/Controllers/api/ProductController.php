@@ -27,9 +27,14 @@ class ProductController extends Controller
 
     public function find(Request $request)
     {
-        $products = Product::with('categories')->where('name', 'like', '%' . $request->name . '%')
-            ->get();
-        dd($products);
+        $perPage = $request->input('per_page', 10);
+
+
+        $products = Product::with('categories')
+            ->where('name', 'like', '%' . $request->name . '%')
+            ->paginate($perPage);
+
+
         return new ResponseResource(true, 'Data Product!', $products);
     }
 }

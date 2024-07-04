@@ -16,8 +16,8 @@ class Transaction extends Model
         'user_id',
         'status',
         'total_biaya_product',
-        'biaya_pengiriman',
-        'order_id_midtrans'
+        'no_transaction',
+        'order_id_midtrans',
     ];
 
 
