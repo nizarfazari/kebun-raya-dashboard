@@ -39,8 +39,5 @@ class Transaction extends Model
     }
 
       
-    public function receipt()
-    {
-        return $this->hasOne(Receipt::class);
-    }
+  
 }

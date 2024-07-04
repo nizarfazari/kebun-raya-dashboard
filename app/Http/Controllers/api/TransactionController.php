@@ -80,7 +80,7 @@ class TransactionController extends Controller
     {
 
         $status = $request->query('status') ?? "pending";
-        $transaction = Transaction::with('detail', 'detail.product', 'transaction_buyer', 'receipt')
+        $transaction = Transaction::with('detail', 'detail.product', 'transaction_buyer')
             ->where('user_id', Auth::user()->id)
             ->where('status', $status)
             ->get();
