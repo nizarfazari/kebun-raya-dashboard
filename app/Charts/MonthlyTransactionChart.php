@@ -31,7 +31,6 @@ class MonthlyTransactionChart
             ->setTitle('Data Penjualan Produk')
             ->setSubtitle('Total Penerimaan Biaya Produk')
             ->addData('Total Biaya Produk', $dataTotalBiaya)
-            ->addData('', [70, 29, 77, 28, 55, 45])
             ->setHeight(500)
             ->setXAxis($dataBulan);
     }

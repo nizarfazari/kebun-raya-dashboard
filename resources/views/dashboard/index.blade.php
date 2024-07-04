@@ -106,10 +106,13 @@
         </div>
     </div>
 
+    <div>
+        
+    </div>
+
     <div class="card">
         <div class="card-header">
             <h4>Transaksi Terbaru</h4>
-
         </div>
         <div class="card-body p-0">
             <div class="table-responsive table-invoice">
@@ -117,6 +120,7 @@
                     <thead>
 
                         <tr>
+                            <th>No</th>
                             <th>Invoice ID</th>
                             <th>Customer</th>
                             <th>Status</th>
@@ -128,6 +132,9 @@
                     <tbody>
                         @foreach ($transaction as $d)
                             <tr>
+                                <td>
+                                    <div>{{ $loop->iteration }}</div>
+                                </td>
                                 <td>
                                     <div>{{ $d->order_id_midtrans }}</div>
                                 </td>

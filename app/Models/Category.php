@@ -10,17 +10,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
 {
-    use HasFactory;
-    use Sluggable;
+    use HasFactory, Sluggable;
+
     protected $fillable = [
         'name',
         'image',
     ];
 
-
-    public function products() : BelongsToMany
+    public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'products_categories');
+        return $this->belongsToMany(Product::class, 'products_categories');
     }
 
     public function sluggable(): array
@@ -31,10 +30,11 @@ class Category extends Model
             ]
         ];
     }
+
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($image) => asset('storage/category/' .$image),
+            get: fn ($image) => asset('storage/category/' . $image),
         );
     }
 }
