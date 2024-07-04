@@ -136,7 +136,7 @@
                                     <div>{{ $loop->iteration }}</div>
                                 </td>
                                 <td>
-                                    <div>{{ $d->order_id_midtrans }}</div>
+                                    <div>{{ $d->no_transaction }}</div>
                                 </td>
                                 <td class="font-weight-600">{{ $d->transaction_buyer->first_name }}
                                     {{ $d->transaction_buyer->last_name }}</td>
@@ -156,8 +156,8 @@
                                 </td>
                                 <td>{{ $d->created_at }}</td>
                                 <td>
-                                    @if ($d->receipt)
-                                        <p class="mb-0">{{ $d->receipt->no_receipt }}</p>
+                                    @if ($d->no_receipt)
+                                        <p class="mb-0">{{ $d->no_receipt }}</p>
                                     @else
                                         <p>No Resi Belum Di inputkan</p>
                                     @endif

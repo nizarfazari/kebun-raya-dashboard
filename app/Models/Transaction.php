@@ -18,6 +18,8 @@ class Transaction extends Model
         'total_biaya_product',
         'no_transaction',
         'order_id_midtrans',
+        'image',
+        'no_receipt'
     ];
 
 
@@ -37,7 +39,4 @@ class Transaction extends Model
     {
         return $this->hasOne(TransactionBuyer::class);
     }
-
-      
-  
 }

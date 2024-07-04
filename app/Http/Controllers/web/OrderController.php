@@ -35,7 +35,7 @@ class OrderController extends Controller
         $month = $request->query('month');
         $year = $request->query('year');
 
-        $data = Transaction::with(['detail', 'transaction_buyer', 'receipt'])
+        $data = Transaction::with(['detail', 'transaction_buyer'])
             ->whereYear('created_at', $year)
             ->whereMonth('created_at', $month)
             ->get();
@@ -110,30 +110,32 @@ class OrderController extends Controller
 
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
+        $transaction = Transaction::find($request->transaction_id);
 
-        $transaction = Transaction::where('id', $request->transaction_id)->first();
         $image = $request->file('image');
         $filename = time() . '-' . $image->hashName();
         $path = 'order/' . $filename;
         Storage::disk('public')->put($path, file_get_contents($image));
 
-
-        $transaction->receipt()->create([
-            'no_receipt' => $request->no_receipt,
-            'image' => $filename
-        ]);
+        if ($transaction) {
+            $transaction->update([
+                'no_receipt' => $request->no_receipt,
+                'image' => $filename,
+            ]);
+        }
 
         return redirect()->route('order.index');
     }
 
-    public function export_pdf(Request $request)  {
+    public function export_pdf(Request $request)
+    {
         $month = $request->query('month');
         $year = $request->query('year');
 
         $data = Transaction::with(['detail', 'detail.product'])
-        ->whereYear('created_at', $year)
-        ->whereMonth('created_at', $month)
-        ->get();
+            ->whereYear('created_at', $year)
+            ->whereMonth('created_at', $month)
+            ->get();
 
 
 

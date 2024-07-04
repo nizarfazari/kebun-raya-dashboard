@@ -18,14 +18,24 @@ class MonthlyTransactionChart
     public function build(): \ArielMejiaDev\LarapexCharts\LineChart
     {
 
+
+
         $tahun = date('Y');
         $bulan = date('m');
-        
         for ($i = 1; $i <= $bulan; $i++) {
-            $totalBiayaProduct = Transaction::whereYear('created_at', $tahun)->where('status', 'DITERIMA')->whereMonth('created_at', $i) ->selectRaw('SUM(total_biaya_product + biaya_pengiriman) as total_biaya')->value('total_biaya');
+
+            $totalBiayaProduct = Transaction::with('transaction_buyer')
+                ->whereYear('transactions.created_at', $tahun)
+                ->where('transactions.status', 'DITERIMA')
+                ->whereMonth('transactions.created_at', $i)
+                ->join('transaction_buyers', 'transactions.id', '=', 'transaction_buyers.transaction_id')
+                ->selectRaw('SUM(transactions.total_biaya_product + transaction_buyers.cost_courier) as total_biaya')
+                ->value('total_biaya');
             $dataBulan[] = Carbon::create()->month($i)->format('F');
             $dataTotalBiaya[] = $totalBiayaProduct;
         }
+
+
 
         return $this->chart->lineChart()
             ->setTitle('Data Penjualan Produk')
