@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>@yield('title') {{ config('app.name') }}</title>
+    @vite('resources/css/app.css')
     @if (env('APP_ENV') === 'development')
         <link rel="stylesheet" href="{{ asset('/assets/modules/select2/dist/css/select2.min.css') }}">
         <!-- General CSS Files -->

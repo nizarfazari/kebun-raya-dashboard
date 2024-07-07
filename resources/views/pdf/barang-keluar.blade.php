@@ -9,29 +9,21 @@
 </head>
 
 <body>
-    {{ $data }}
-    <h1>Laporan Data Penjualan Bulan </h1>
+    <h1>Laporan Data Barang Keluar </h1>
     <table align="center" border="1px" style="width: 95%">
         <tr>
             <td>Barang Keluar</td>
             <td>Jumlah</td>
-            <td>Total Penjualan</td>
         </tr>
-        @foreach ($data as $item)
+        @foreach ($barang_keluar as $product_name => $qty)
             <tr>
                 <td>
-                    <ul>
-                        @foreach ($item->detail as $val)
-                            <li>{{ $val->product->name }}</li>
-                        @endforeach
-                    </ul>
+                    {{ $product_name }}
                 </td>
                 <td>
-                    @foreach ($item->detail as $val)
-                        <li>{{ $val->qty }}</li>    
-                    @endforeach
+                    {{ $qty }}
                 </td>
-                <td>{{ $item->total_biaya_product + $item->biaya_pengiriman }}</td>
+
             </tr>
         @endforeach
     </table>

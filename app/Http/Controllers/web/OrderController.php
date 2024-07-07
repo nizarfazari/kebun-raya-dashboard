@@ -179,7 +179,23 @@ class OrderController extends Controller
 
 
 
-        $pdf = Pdf::loadView('pdf.barang-keluar', compact('data'));
+        $barang_keluar = [];
+
+        foreach ($data as $transaction) {
+            foreach ($transaction->detail as $detail) {
+                $product_name = $detail->product->name;
+                $qty = $detail->qty;
+
+                if (array_key_exists($product_name, $barang_keluar)) {
+                    $barang_keluar[$product_name] += $qty;
+                } else {
+                    $barang_keluar[$product_name] = $qty;
+                }
+            }
+        }
+
+        
+        $pdf = Pdf::loadView('pdf.barang-keluar', compact('barang_keluar'));
         return $pdf->stream('invoice.pdf');
     }
 }

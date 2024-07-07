@@ -34,8 +34,13 @@
                                 <td>
                                     <div>{{ $d->no_transaction }}</div>
                                 </td>
-                                <td class="font-weight-600">{{ $d->transaction_buyer->first_name }}
-                                    {{ $d->transaction_buyer->last_name }}</td>
+                                <td class="font-weight-600">
+                                    @if (!empty($d->transaction_buyer->first_name) && !empty($d->transaction_buyer->last_name))
+                                        {{ $d->transaction_buyer->first_name }} {{ $d->transaction_buyer->last_name }}
+                                    @else
+                                        Admin
+                                    @endif
+                                </td>
                                 <td>
                                     @if ($d->status == 'PENDING')
                                         <div class="badge badge-primary">PENDING</div>
