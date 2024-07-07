@@ -26,7 +26,6 @@
                             <th>Total Harga</th>
                             <th>Due Date</th>
                             <th>No Resi</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,17 +57,6 @@
                                     @else
                                         <p>No Resi Belum Di inputkan</p>
                                     @endif
-
-                                </td>
-                                <td>
-                                    <a href="#" class="btn btn-primary">Detail</a>
-                                    @if ($d->status == 'SUDAH-DIBAYAR')
-                                        <a href="#" class="btn btn-primary" data-target="#modal-1"
-                                            data-id="{{ $d->id }}" data-toggle="modal">Upload Resi</a>
-                                        <button class="btn btn-primary swal-button-confirm"
-                                            data-id="{{ $d->order_id_midtrans }}">Konfirmasi</button>
-                                    @endif
-
                                 </td>
                             </tr>
                         @endforeach
@@ -77,37 +65,6 @@
             </div>
         </div>
 
-
-        {{-- Modal --}}
-        <div class="modal fade" tabindex="-1" role="dialog" id="modal-1">
-            <div class="modal-dialog" role="document">
-                <form class="modal-content" method="POST" enctype="multipart/form-data"
-                    action="{{ route('order.upload_receipt') }}">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="transaction-id" name="transaction_id">
-                        <div class="form-group">
-                            <label>Uplaod Bukti Resi</label>
-                            <input type="file" class="form-control" name="image">
-                        </div>
-                        <div class="form-group">
-                            <label>No Resi</label>
-                            <input type="text" class="form-control" name="no_receipt">
-                        </div>
-                    </div>
-                    <div class="modal-footer bg-whitesmoke br">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
     </div>
 

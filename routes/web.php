@@ -6,6 +6,7 @@ use App\Http\Controllers\web\CategoryController as WebCategoryController;
 use App\Http\Controllers\web\ProductController as WebProductController;
 use App\Http\Controllers\web\OrderController as WebOrderController;
 use App\Http\Controllers\web\DashboardController as WebDashboardController;
+use App\Http\Controllers\web\ReportController as WebReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,9 +51,12 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::prefix('order')->name('order.')->group(function () {
         Route::get('/', [WebOrderController::class, 'index'])->name('index');
-        Route::get('/detail', [WebOrderController::class, 'detail_order'])->name('detail');
         Route::post('/upload_receipt', [WebOrderController::class, 'upload_receipt'])->name('upload_receipt');
         Route::get('/barang-keluar', [WebOrderController::class, 'export_pdf'])->name('barang-keluar');
+    });
+    Route::prefix('report')->name('report.')->group(function () {
+        Route::get('/', [WebReportController::class, 'index'])->name('index');
+        Route::get('/detail', [WebReportController::class, 'show'])->name('detail');
     });
 
     Route::prefix('product')->name('product.')->group(function () {

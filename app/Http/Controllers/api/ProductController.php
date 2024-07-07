@@ -27,13 +27,20 @@ class ProductController extends Controller
 
     public function find(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
-
+        $perPage = $request->query('per_page', 10);
+        $searchName = $request->query('name', '');
+        $category = $request->query('category', '');
 
         $products = Product::with('categories')
-            ->where('name', 'like', '%' . $request->name . '%')
-            ->paginate($perPage);
+            ->where('name', 'like', '%' . $searchName . '%');
 
+        if (!empty($category)) {
+            $products = $products->whereHas('categories', function ($query) use ($category) {
+                $query->where('name', $category);
+            });
+        }
+
+        $products = $products->paginate($perPage);
 
         return new ResponseResource(true, 'Data Product!', $products);
     }

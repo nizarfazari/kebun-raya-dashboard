@@ -27,7 +27,7 @@ class Receipt extends Model
         return $this->belongsTo(Transaction::class);
     }
 
-    protected function image(): Attribute
+    public function image(): Attribute
     {
         return Attribute::make(
             get: fn ($image) => asset('storage/category/' . $image),

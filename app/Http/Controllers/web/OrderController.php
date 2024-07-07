@@ -16,32 +16,11 @@ class OrderController extends Controller
 
     public function index()
     {
+        $data = Transaction::with(['detail', 'transaction_buyer'])->get();
 
-
-        $datas = Transaction::select(
-            DB::raw('YEAR(created_at) as year'),
-            DB::raw('MONTH(created_at) as month'),
-            DB::raw('COUNT(*) as total_transactions')
-        )
-            ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'))
-            ->orderBy(DB::raw('MONTH(created_at)'), 'asc')->get();
-
-
-        return view('order.index', compact('datas'));
+        return view('order.index', compact('data'));
     }
 
-    public function detail_order(Request $request)
-    {
-        $month = $request->query('month');
-        $year = $request->query('year');
-
-        $data = Transaction::with(['detail', 'transaction_buyer'])
-            ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
-            ->get();
-
-        return view('order.detail', compact('data'));
-    }
 
     public function create_receipt(Request $request)
     {
