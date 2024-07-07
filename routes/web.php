@@ -51,6 +51,10 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::prefix('order')->name('order.')->group(function () {
         Route::get('/', [WebOrderController::class, 'index'])->name('index');
+        Route::get('/create', [WebOrderController::class, 'create'])->name('create');
+        Route::post('/add-to-cart/{id}',  [WebOrderController::class, 'addToCart'])->name('addToCart');
+        Route::patch('/update/cart/{id}',  [WebOrderController::class, 'updateCart'])->name('addToCart');
+        Route::delete('/update/cart/{id}',  [WebOrderController::class, 'deleteCart'])->name('addToCart');
         Route::post('/upload_receipt', [WebOrderController::class, 'upload_receipt'])->name('upload_receipt');
         Route::get('/barang-keluar', [WebOrderController::class, 'export_pdf'])->name('barang-keluar');
     });

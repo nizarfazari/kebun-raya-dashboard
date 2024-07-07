@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Yoeunes\Toastr\Facades\Toastr;
 
 class OrderController extends Controller
 {
@@ -19,6 +23,63 @@ class OrderController extends Controller
         $data = Transaction::with(['detail', 'transaction_buyer'])->get();
 
         return view('order.index', compact('data'));
+    }
+    public function create()
+    {
+
+        $carts = Cart::with(['product'])->where('user_id', Auth::user()->id)->get();
+
+        $data = Product::with(['categories'])->get();
+
+        return view('order.create', compact('data',  'carts'));
+    }
+
+
+    public function addToCart($id)
+    {
+
+        $duplicate = Cart::where("product_id", $id)
+            ->where("user_id", Auth::user()->id)
+            ->first();
+
+
+
+        if ($duplicate) {
+            Toastr::warning('Product has already been added to the cart', 'Warning');
+
+            return redirect()->back();
+        }
+
+
+        $cart = Cart::create([
+            "user_id" => Auth::user()->id,
+            'product_id' => $id,
+            "qty" => 1
+        ]);
+
+        Toastr::success('Successfully added product to cart', 'Success');
+
+        return redirect()->back();
+    }
+
+
+    public function updateCart(Request $request, $id)
+    {
+        $cart = Cart::where("id", $id)->update([
+            'qty' => $request->quantity
+        ]);
+
+
+        return redirect()->back();
+    }
+
+    public function deleteCart(Request $request, $id)
+    {
+        $cart = Cart::findOrFail($id);
+        $cart->delete();
+        Toastr::success('Successfully Menghapus product to cart', 'Success');
+
+        return redirect()->back();
     }
 
 
